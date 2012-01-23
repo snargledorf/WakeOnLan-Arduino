@@ -23,8 +23,7 @@ class WakeOnLan {
 		
 	private:
 		EthernetUDP _udp;
-		byte _ip[4];
-		byte _magic_packet[102];
+		byte _ip[];
 };
 
 #else
@@ -38,8 +37,7 @@ class WakeOnLan {
 		static void send(byte* mac, byte port);
 		
 	private:
-		byte _ip[4];
-		byte _magic_packet[102];		
+		byte _ip[];	
 };
 
 #endif
