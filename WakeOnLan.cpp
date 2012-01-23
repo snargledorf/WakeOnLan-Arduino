@@ -23,9 +23,6 @@ byte _ip[4] = {255,255,255,255};
 WakeOnLan::WakeOnLan(EthernetUDP Udp){
 	_udp = Udp;
 }
-#endif
-
-#if defined(ARDUINO) && ARDUINO >= 100
 void WakeOnLan::send(byte* mac, byte port) {
 	for (byte ix=6; ix<102; ix++)
 	{
