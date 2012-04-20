@@ -7,7 +7,7 @@
 	(Arduino 1.0+)
 		1. Initialize WakeOnLan with your EthernetUDP object.
 		2. Send magic packet using the method 'send(byte* mac, byte port);'
-		3. Repeat step 3 for as many packets as you would like to send.
+		3. Repeat step 2 for as many packets as you would like to send.
 	(Arduino 0023-)
 		1. Initiate Udp
 		2. Send magic packet using the static method 'send(byte* mac, byte port);'
