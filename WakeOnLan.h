@@ -19,32 +19,47 @@
 #if defined(ARDUINO) && ARDUINO >= 100 // Arduino 1.0+ compatibility
 
 # include "EthernetUdp.h"
+
 # include "Arduino.h"
+
 class WakeOnLan {
+
 	public:
+	
 		WakeOnLan(EthernetUDP Upd);
+		
 		// Send a magic packet to the provided mac address on the specified port
 		void send(byte* mac, byte port);
 		
 	private:
+	
 		EthernetUDP _udp;
+		
 		byte _ip[];
+		
 };
 
-#else
+#else // ARDUINO not defined or ARDUINO < 100
 
 # include "Udp.h"
+
 # include "WProgram.h"
+
 class WakeOnLan {
+
 	public:
+	
 		WakeOnLan();	
+		
 		// Send a magic packet to the provided mac address on the specified port
 		static void send(byte* mac, byte port);
 		
 	private:
+	
 		byte _ip[];	
+		
 };
 
-#endif
+#endif // #if defined(ARDUINO) && ARDUINO >= 100
 
-#endif
+#endif // #ifndef wakeonloan_h

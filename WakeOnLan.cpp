@@ -19,28 +19,46 @@
 byte _ip[] = {255,255,255,255};
 
 #if defined(ARDUINO) && ARDUINO >= 100
+
 WakeOnLan::WakeOnLan(EthernetUDP Udp){
+
 	_udp = Udp;
+	
 }
+
 void WakeOnLan::send(byte* mac, byte port) {
+
     byte preamble[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+	
     byte i;
 
     _udp.beginPacket(_ip, port);
+	
     _udp.write(preamble, sizeof preamble);
     
     for (i=0; i<16; i++)
+	
       _udp.write(mac, sizeof mac);
       
     _udp.endPacket();
+	
 }
-#else
+
+#else // ARDUINO not defined or ARDUINO < 100
+
 static void WakeOnLan::send(byte* mac, byte port) {
+
 	byte _magic_packet[102] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
+	
 	for (byte ix=6; ix<102; ix++)
 	{
+	
 		_magic_packet[ix] = mac[ix%6];
+		
 	}
+	
 	Udp.sendPacket(magic_packet, 102, _ip, port);
+	
 }
-#endif
+
+#endif // #if defined(ARDUINO) && ARDUINO >= 100
