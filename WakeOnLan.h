@@ -2,64 +2,37 @@
 	WakeOnLan by Ryan Esteves
 	
 	Send WOL magic packets
-	
-	To Use:
-	(Arduino 1.0+)
-		1. Initialize WakeOnLan with your EthernetUDP object.
-		2. Send magic packet using the method 'send(byte* mac, byte port);'
-		3. Repeat step 3 for as many packets as you would like to send.
-	(Arduino 0023-)
-		1. Initiate Udp
-		2. Send magic packet using the static method 'send(byte* mac, byte port);'
-		3. Repeat step 3 for as many packets as you would like to send.
 */
+
 #ifndef wakeonloan_h
 #define wakeonloan_h
 
 #if defined(ARDUINO) && ARDUINO >= 100 // Arduino 1.0+ compatibility
 
-# include "EthernetUdp.h"
-
-# include "Arduino.h"
-
-class WakeOnLan {
-
-	public:
-	
-		WakeOnLan(EthernetUDP Upd);
-		
-		// Send a magic packet to the provided mac address on the specified port
-		void send(byte* mac, byte port);
-		
-	private:
-	
-		EthernetUDP _udp;
-		
-		byte _ip[];
-		
-};
+#include "Arduino.h"
+#include "EthernetUdp.h"
 
 #else // ARDUINO not defined or ARDUINO < 100
 
-# include "Udp.h"
+#include "WProgram.h"
+#include "Udp.h"
 
-# include "WProgram.h"
+#endif // ARDUINO >= 100
 
 class WakeOnLan {
 
-	public:
-	
-		WakeOnLan();	
-		
+	public:		
 		// Send a magic packet to the provided mac address on the specified port
+#if defined(ARDUINO) && ARDUINO >= 100 // Arduino 1.0+ compatibility
+		static void send(byte* mac, byte port, EthernetUDP udp);
+#else
 		static void send(byte* mac, byte port);
+#endif
 		
 	private:
-	
-		byte _ip[];	
+		
+		static byte _ip[4];
 		
 };
-
-#endif // #if defined(ARDUINO) && ARDUINO >= 100
 
 #endif // #ifndef wakeonloan_h
